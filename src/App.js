@@ -1,72 +1,59 @@
-import React from 'react';
-import './normalize.css';
-import './style.css';
+import React, { useState } from 'react';
+import Header from './components/header/Header';
+import Total from './components/total/Total';
+import History from './components/history/History';
+import Operation from './components/operation/Operation';
 
-function App() {
-  return (
-    <div className="App">
-    <header>
-        <h1>Кошелек</h1>
-        <h2>Калькулятор расходов</h2>
-    </header>
+let inc = 0;
+let exp = 0;
 
-    <main>
-        <div className="container">
-            <section className="total">
-                <header className="total__header">
-                    <h3>Баланс</h3>
-                    <p className="total__balance">0 ₽</p>
-                </header>
-                <div className="total__main">
-                    <div className="total__main-item total__income">
-                        <h4>Доходы</h4>
-                        <p className="total__money total__money-income">
-                            +0 ₽
-                        </p>
-                    </div>
-                    <div className="total__main-item total__expenses">
-                        <h4>Расходы</h4>
-                        <p className="total__money total__money-expenses">
-                            -0 ₽
-                        </p>
-                    </div>
+const App = () => {
+
+    const [ transactions, setTransactions ] = useState([]);
+    const [ description, setDescription ] = useState('');
+    const [ amount, setAmount ] = useState(0);
+
+    const addTransaction = (sign)=> {
+        if( amount === 0 || description === '') return;
+        const transaction = {
+            id: `cmr${(+new Date()).toString(16)}`,
+            description: description,
+            amount: +amount,
+            sign
+        }
+        if(sign) inc += +amount;
+        else exp += +amount;
+        setTransactions([...transactions, transaction]);
+        setDescription('');
+        setAmount(0);
+    }
+
+    const addDescription = (e) => {
+        setDescription(e.target.value);
+    }
+
+    const addAmount = (e) => {
+        setAmount(e.target.value);
+    }
+
+    return (
+        <div className="App">
+            <Header />
+
+            <main>
+                <div className="container">
+                    <Total inc={inc} exp={exp}/>
+                    <History transactions={transactions}/>
+                    <Operation 
+                        addTransaction={addTransaction}
+                        addDescription={addDescription}
+                        addAmount={addAmount}
+                        description={description}
+                        amount={amount}
+                        />
                 </div>
-            </section>
-
-            <section className="history">
-                <h3>История расходов</h3>
-                <ul className="history__list">
-                    <li className="history__item history__item-plus">Получил зарплату
-                        <span className="history__money">+30000 ₽</span>
-                        <button className="history__delete">x</button>
-                    </li>
-
-                    <li className="history__item  history__item-minus">Отдал долг
-                        <span className="history__money">-10000 ₽</span>
-                        <button className="history__delete">x</button>
-                    </li>
-                </ul>
-            </section>
-
-            <section className="operation">
-                <h3>Новая операция</h3>
-                <form id="form">
-                    <label>
-                        <input type="text" className="operation__fields operation__name" placeholder="Наименование операции" />
-                    </label>
-                    <label>
-                        <input type="number" className="operation__fields operation__amount" placeholder="Введите сумму" />
-                    </label>
-                    <div className="operation__btns">
-                        <button type="submit" className="operation__btn operation__btn-subtract">РАСХОД</button>
-                        <button type="submit" className="operation__btn operation__btn-add">ДОХОД</button>
-                    </div>
-
-                </form>
-            </section>
+            </main>
         </div>
-    </main>
-    </div>
   );
 }
 
