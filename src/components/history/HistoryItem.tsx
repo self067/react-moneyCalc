@@ -1,6 +1,8 @@
 import React from 'react';
+import { iTransaction } from '../../types';
 
-const HistoryItem = ({ transaction }) => {
+const HistoryItem = (props: { transaction: iTransaction }) => {
+  const { transaction } =  props;
   let className = 'history__item';
   let sg;
   if( transaction.sign) { className += ' history__item-plus'; sg = '+'}

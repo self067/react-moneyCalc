@@ -1,7 +1,10 @@
 import React from 'react';
 import HistoryItem from './HistoryItem';
+import { iTransaction } from '../../types';
 
-const History = ({transactions}) => {
+const History = (props:{transactions:iTransaction[]}) => {
+    const transactions = props.transactions;
+    console.log(props,transactions);
     
   return (
             <section className="history">
