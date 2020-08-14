@@ -1,8 +1,7 @@
 import React from 'react';
-import { iTransaction } from '../../types';
+import { iTransactionProps } from '../../types';
 
-const HistoryItem = (props: { transaction: iTransaction }) => {
-  const { transaction } =  props;
+const HistoryItem:React.FC<iTransactionProps> = ({ transaction, delTransaction }) => {
   let className = 'history__item';
   let sg;
   if( transaction.sign) { className += ' history__item-plus'; sg = '+'}
@@ -10,7 +9,10 @@ const HistoryItem = (props: { transaction: iTransaction }) => {
   return (
     <li className={className}>{transaction.description}
       <span className="history__money">{sg}{transaction.amount} ₽</span>
-      <button className="history__delete">x</button>
+      <button 
+        className="history__delete"
+        onClick={() => delTransaction(transaction.id)}
+        >x</button>
     </li>
 
   )

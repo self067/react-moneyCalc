@@ -1,23 +1,20 @@
 import React from 'react';
 import HistoryItem from './HistoryItem';
-import { iTransaction } from '../../types';
+import { iTransactions, iTransaction } from '../../types';
 
-const History = (props:{transactions:iTransaction[]}) => {
-    const transactions = props.transactions;
-    console.log(props,transactions);
-    
+const History:React.FC<iTransactions> = ({transactions,delTransaction}) => {
   return (
             <section className="history">
             <h3>История расходов</h3>
             <ul className="history__list">
-                { transactions.map((item)=> 
+                { transactions.map((item:iTransaction)=> 
                     <HistoryItem 
                         key={item.id} 
                         transaction={item}
+                        delTransaction={delTransaction}
                 />)}
             </ul>
         </section>
-
 )
 }
 

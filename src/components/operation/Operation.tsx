@@ -1,11 +1,8 @@
 import React from 'react';
+import { iOperation } from '../../types';
 
-const Operation = (props: 
-  {addTransaction: (sign: boolean) => void, 
-    addDescription:  (e: React.ChangeEvent<HTMLInputElement>) => void, 
-    addAmount:  (e: React.ChangeEvent<HTMLInputElement>) => void, 
-    description: string, amount: number}) => {
-  const {addTransaction, addDescription, addAmount, description, amount} = props;
+const Operation:React.FC<iOperation> = (
+  {addTransaction, addDescription, addAmount, description, amount}) => {
   return (
     <section className="operation">
       <h3>Новая операция</h3>

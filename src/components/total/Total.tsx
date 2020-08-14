@@ -1,6 +1,7 @@
 import React from 'react';
+import { iTotal } from '../../types';
 
-const Total = ({inc, exp}) => {
+const Total:React.FC<iTotal> = ({inc, exp}) => {
 
   return (
     <section className="total">
